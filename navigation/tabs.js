@@ -7,8 +7,10 @@ import {
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
 import Svg, { Path } from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
+import { createStackNavigator } from "@react-navigation/stack";
 
-import { Home } from "../screens"
+
+import { Home, LoginContainer, ItemDetail } from "../screens"
 
 import { COLORS, icons } from "../constants"
 
@@ -213,5 +215,19 @@ const Tabs = () => {
         </Tab.Navigator>
     )
 }
+export const MainNavigator = createStackNavigator();
+const HomeNavigator = () => {
+    return (
+        <MainNavigator.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+            initialRouteName={'Tabs'}
+        >
+            <MainNavigator.Screen name="Tabs" component={Tabs} />
+            <MainNavigator.Screen name="ItemDetail" component={ItemDetail} />
+        </MainNavigator.Navigator>
+    )
+}
 
-export default Tabs
+export default HomeNavigator
