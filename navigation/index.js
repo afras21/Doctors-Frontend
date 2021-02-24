@@ -16,5 +16,6 @@ const AuthStack = createSwitchNavigator({
     initialRouteName: 'Splash'
 });
 
+const Navigation = createAppContainer(AuthStack);
 
-export default AuthStack;
+export default Navigation;

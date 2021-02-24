@@ -7,17 +7,19 @@ import { icons } from "../constants";
 
 
 export default header = props => {
-    const {navigation, showLogout} = props;
+    const {navigation, showLogout, backButton} = props;
     return (
         <View>
             <StatusBar />
             <SafeAreaView>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: RFValue(10)}}>
-            <TouchableOpacity onPress={() => {navigation.navigate('Login')}}>
-                <Text style={{ textAlign: 'left'}}>{icons.back}</Text>
-            </TouchableOpacity>
+                    {
+                        backButton &&
+                        <TouchableOpacity onPress={() => { navigation.navigate('Login') }}>
+                            <Image source={icons.back} style={{ height: 25, width: 25 }}></Image>
+                        </TouchableOpacity>
+                    }
             <TouchableOpacity onPress={() => handleLogout(navigation)}>
-                {/* <Text style={{ textAlign: 'right'}}>{signOutIcon}</Text> */}
             </TouchableOpacity>
             </View>
 

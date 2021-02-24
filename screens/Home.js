@@ -9,6 +9,7 @@ import {
     FlatList,
     ScrollView
 } from 'react-native'
+import { TextInput } from 'react-native-gesture-handler';
 import { color } from 'react-native-reanimated';
 
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
@@ -44,25 +45,48 @@ const ScrollableTab = ({ tabList, selectedTab, onPress }) => {
     )
 }
 
+const TodaysPickCard = ({ navigation, productList }) => {
+
+    const renderTodaysCard = ({ item }) => (
+        <View style={{ margin: 15, borderRadius: SIZES.radius, backgroundColor: '#ffffff' }}        >
+            <Image
+                style={{ borderRadius: SIZES.radius, width: 230, height: 150 }}
+                source={item.picks}
+            />
+            <Text style={{ textAlign: 'center', color: COLORS.primary, marginTop: 20 }}>{item.productName}</Text>
+            <Text style={{ textAlign: 'center', marginTop: 20, ...FONTS.h4 }}>Love yourself</Text>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <Image source={icons.playgreen} style={{ height: 50, width: 50, margin: 15 }} />
+            </View>
+        </View>
+    )
+
+    return (
+        <View style={{ marginTop: SIZES.padding }}>
+            <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={productList}
+                renderItem={renderTodaysCard}
+                keyExtractor={item => `${item.productId}`}
+            />
+        </View>
+    )
+}
+
 const ScrollableCard = ({ navigation, productList }) => {
 
     const renderCard = ({ item }) => (
         <TouchableOpacity
-            style={{ marginLeft: SIZES.padding }}
+            style={{ marginLeft: SIZES.padding * 2, height: 100 }}
             onPress={() => navigation.navigate("ItemDetail", { "itemInfo": item })}
         >
-            <View style={{ width: SIZES.width / 1.7,  borderRadius: SIZES.radius * 1, backgroundColor: COLORS.white }}>
+            <View style={{ borderRadius: SIZES.radius * 0.5, backgroundColor: COLORS.white }}>
                 <Image
                     source={item.image}
                     resizeMode="cover"
-                    style={{ width: '100%', height: '70%'}}
+                    style={{ width: 100, height: 100, borderRadius: SIZES.radius * 0.5}}
                 />
-                <View style={{ position: 'absolute', bottom: 20, left: 15, borderRadius: 15, paddingVertical: 30, paddingHorizontal: 15, backgroundColor: COLORS.transparentLightGray }}>
-                    <Text style={{ ...FONTS.h4 }}> {item.productName}</Text>
-                </View>
-                <View style={{ position: 'absolute', bottom: -5, left: 15, borderRadius: 15, paddingVertical: 30, paddingHorizontal: 15, backgroundColor: COLORS.transparentLightGray }}>
-                    <Text style={{ ...FONTS.body3, color: '#c2c2c2' }}> {'mental therapist'}</Text>
-                </View>
             </View>
         </TouchableOpacity>
         
@@ -170,21 +194,24 @@ const Home = ({ navigation }) => {
         productList: [
             {
                 productId: 1,
-                productName: 'Chair Green Colour',
+                productName: 'Meditation',
                 price: 10.00,
                 image: images.greenChair,
+                picks: images.topPicks2
             },
             {
                 productId: 2,
-                productName: 'Chair Peach Colour',
+                productName: 'Nutrition plus',
                 price: 10.00,
                 image: images.redChair,
+                picks: images.topPicks1
             },
             {
                 productId: 3,
-                productName: 'Chair White Colour',
+                productName: 'Shape it',
                 price: 10.00,
                 image: images.whiteChair,
+                picks: images.whiteChair
             },
 
         ]
@@ -200,14 +227,14 @@ const Home = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() => console.log("Menu on clicked")}
                         >
-                            <Image
+                            {/* <Image
                                 source={icons.back}
                                 resizeMode="contain"
                                 style={{
                                     width: 25,
                                     height: 25
                                 }}
-                            />
+                            /> */}
                         </TouchableOpacity>
                     </View>
 
@@ -233,15 +260,14 @@ const Home = ({ navigation }) => {
     function renderTitle(title) {
         return (
             <View style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding }}>
-                <Text style={{ color: COLORS.black, ...FONTS.h1}}>Find your therapist</Text>
-                <Text style={{ color: COLORS.black, ...FONTS.body1 }}>{title}</Text>
+                <Text style={{ color: COLORS.black, ...FONTS.h1, marginLeft: '5%'}}>Dashboard </Text>
             </View>
         )
     }
 
     function renderRecommended(productList) {
         return(
-            <ScrollView style={{position: 'absolute', marginTop: 570, height: '30%'}}>
+            <View style={{position: 'absolute', marginTop: 570, height: '30%'}}>
             <FlatList
                 vertical
                 showsVerticalScrollIndicator={false}
@@ -285,7 +311,27 @@ const Home = ({ navigation }) => {
                 }}
                 keyExtractor={item => `${item.productId}`}
             />
-            </ScrollView>
+            </View>
+        )
+    }
+
+    function renderAddCard() {
+        return (
+            <TouchableOpacity
+                style={{ marginLeft: SIZES.padding * 3 }}
+                onPress={() => { alert('Working on') }}
+            >
+                <View>
+                    <View style={{ borderRadius: SIZES.radius * 0.5, backgroundColor: '#ededed', padding: SIZES.padding * 3, marginTop: 10, height: 100 }}>
+                        <Image
+                            source={icons.plus}
+                            resizeMode="cover"
+                            style={{ width: 40, height: 40, borderRadius: SIZES.radius * 0.5, }}
+                        />
+                    </View>
+                    <Text style={{ margin: 10, ...FONTS.h4, color: '#c2c2c2' }}>Add news</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 
@@ -293,28 +339,31 @@ const Home = ({ navigation }) => {
             <SafeAreaView style={styles.container}>
                 {renderHeader()}
                 {renderTitle('with JUST ONE')}
-
-                <ScrollableTab
-                    tabList={tabList}
-                    selectedTab={selectedTab}
-                    onPress={(item) => setSelectedTab(item)}
-                />
-
-                <View>
+                <ScrollView>
+                <ScrollView style={{flexDirection: 'row', marginRight: '5%', marginTop: '5%', maxHeight: 150}} horizontal>
+                    {renderAddCard()}
                     <ScrollableCard
                         navigation={navigation}
                         productList={selectedTab.productList}
                     />
-                    <Text style={{position: 'absolute', marginTop: 300, marginLeft: '7%', color: COLORS.black, ...FONTS.body2}}>Recommended</Text>
-                </View>
-                {renderRecommended(selectedTab.productList)}
+                </ScrollView>
+                <Text style={{marginTop: SIZES.padding * 2, marginLeft: SIZES.padding * 2 ,...FONTS.body2}}>
+                    Todays pick for you
+                </Text>
+                <TodaysPickCard
+                        navigation={navigation}
+                        productList={selectedTab.productList}
+                    />
+                </ScrollView>
+
+                {/* {renderRecommended(selectedTab.productList)} */}
             </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: COLORS.lightGray4
     },
     shadow: {

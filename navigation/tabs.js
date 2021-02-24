@@ -10,9 +10,9 @@ import { isIphoneX } from 'react-native-iphone-x-helper';
 import { createStackNavigator } from "@react-navigation/stack";
 
 
-import { Home, LoginContainer, ItemDetail } from "../screens"
+import { Home, ItemDetail, Profile, LoginContainer, SignUpContainer, CoachContainer, BookingsContainer } from "../screens"
 
-import { COLORS, icons } from "../constants"
+import { COLORS, icons, images } from "../constants"
 
 const Tab = createBottomTabNavigator();
 
@@ -127,7 +127,7 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={icons.dashboard}
+                            source={icons.home}
                             resizeMode="contain"
                             style={{
                                 width: 25,
@@ -146,11 +146,11 @@ const Tabs = () => {
 
             <Tab.Screen
                 name="Search"
-                component={Home}
+                component={BookingsContainer}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={icons.search}
+                            source={icons.calendar}
                             resizeMode="contain"
                             style={{
                                 width: 25,
@@ -169,11 +169,11 @@ const Tabs = () => {
 
             <Tab.Screen
                 name="Like"
-                component={Home}
+                component={CoachContainer}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={icons.pin}
+                            source={icons.whistle}
                             resizeMode="contain"
                             style={{
                                 width: 25,
@@ -192,16 +192,17 @@ const Tabs = () => {
 
             <Tab.Screen
                 name="User"
-                component={Home}
+                component={Profile}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={icons.user}
+                            source={images.userprofile}
                             resizeMode="contain"
                             style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary
+                                width: 30,
+                                height: 30,
+                                borderRadius: 20
+                                // tintColor: focused ? COLORS.primary : COLORS.secondary
                             }}
                         />
                     ),
@@ -226,6 +227,8 @@ const HomeNavigator = () => {
         >
             <MainNavigator.Screen name="Tabs" component={Tabs} />
             <MainNavigator.Screen name="ItemDetail" component={ItemDetail} />
+            <MainNavigator.Screen name="Login" component={LoginContainer} goBack={false}/>
+            <MainNavigator.Screen name="SignUp" component={SignUpContainer} />
         </MainNavigator.Navigator>
     )
 }

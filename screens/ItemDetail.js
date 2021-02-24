@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     StyleSheet,
     View,
@@ -6,13 +6,14 @@ import {
     Image,
     ImageBackground,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView,
 } from 'react-native'
 import { COLORS, SIZES, icons, FONTS, images } from '../constants';
+import { WebView } from "react-native-webview";
+import Modal from "../components/Modal";
 
 const ItemDetail = ({ route, navigation }) => {
-
-    // Render
+    const [modalVisible, setModalVisible] = useState(false);
 
     function renderHeader() {
         return (
@@ -84,7 +85,7 @@ const ItemDetail = ({ route, navigation }) => {
     function renderFooter() {
         return (
             <TouchableOpacity
-            onPress = {() => {alert('Currently unavailable')}}
+            onPress = {() => {_hideModal(modalVisible, setModalVisible)}}
                 style={{
                     position: 'absolute',
                     bottom: '5%',
@@ -104,9 +105,22 @@ const ItemDetail = ({ route, navigation }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             {renderHeader()}
             {renderInfo()}
+            {/* {renderWebView(modalVisible, setModalVisible)} */}
             {renderFooter()}
         </SafeAreaView>
     )
+}
+
+const renderWebView = (modalVisible, setModalVisible) => {
+    return(
+        <View>
+            <Modal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+        </View>
+    )
+}
+
+function _hideModal (modalVisible, setModalVisible) {
+    setModalVisible(!modalVisible)
 }
 
 export default ItemDetail;

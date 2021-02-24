@@ -3,11 +3,24 @@ export const redChair = require("../assets/images/red_chair.png");
 export const greenChair = require("../assets/images/green_chair.png");
 export const whiteChair = require("../assets/images/white_chair.png");
 export const userOne = require("../assets/images/user1.png");
+export const noBookingsFound = require("../assets/images/nobookings.jpg");
+export const topPicks1 = require("../assets/images/toppicks1.png");
+export const topPicks2 = require("../assets/images/toppicks2.png");
+export const userprofile = require("../assets/images/userprofile.jpg");
+
+
+
+
+
 
 export default {
     sofa,
     redChair,
     greenChair,
     whiteChair,
-    userOne
+    userOne,
+    noBookingsFound,
+    topPicks1,
+    topPicks2,
+    userprofile
 }

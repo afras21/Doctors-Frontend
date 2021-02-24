@@ -2,14 +2,15 @@
  * LoginContainer
  */
 import React from 'react';
-import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, SafeAreaView, StyleSheet, AsyncStorage, BackHandler } from 'react-native'
 import { RFValue } from 'react-native-responsive-fontsize'
-import { withNavigation, NavigationEvents } from "react-navigation";
+import { withNavigation } from "react-navigation";
 import {login} from '../../services/authService'
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { COLORS } from '../../constants';
 class LoginContainer extends React.Component {
 
     state = {
@@ -58,7 +59,7 @@ class LoginContainer extends React.Component {
                         <Text style={styles.loginButtonText}>Login</Text>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.forgotPwdText}>Are you new to Jin?</Text>
+                        <Text style={styles.forgotPwdText}>Are you new to Just One?</Text>
                         <TouchableOpacity onPress={() => {this.props.navigation.navigate("SignUp")}}>
                             <Text style={[styles.forgotPwdText, styles.signUpText]}>Signup now</Text>
                         </TouchableOpacity>
@@ -72,26 +73,32 @@ class LoginContainer extends React.Component {
 const styles = StyleSheet.create({
     loginText: {
         fontSize: RFValue(40),
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: COLORS.primary
     },
     root: {
         padding: RFValue(20),
         marginTop: RFValue(60)
     },
     placeholderStyles: {
-        fontSize: RFValue(20),
-        padding: RFValue(10)
+        fontSize: RFValue(15),
+        padding: RFValue(15),
+        marginTop: '5%',
+        backgroundColor: '#ffffff',
+        borderRadius: 20,
+        fontWeight: '300',
     },
     loginFormStyle: {
-        marginTop: RFValue(50)
+        marginTop: RFValue(40)
     },
     loginButton: {
         width: wp(90),
         height: wp(10),
-        backgroundColor: '#3b3b3b',
+        backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: RFValue(20)
+        marginTop: RFValue(20),
+        borderRadius: 20
     },
     loginButtonText: {
         color: '#ffffff',
