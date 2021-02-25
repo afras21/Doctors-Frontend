@@ -33,7 +33,7 @@ class LoginContainer extends React.Component {
     setUserToken = async (data) => {
         await AsyncStorage.setItem('token', data.token);
         await AsyncStorage.setItem('userData', JSON.stringify(data));
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Tabs');
     }
 
     onChangeText = (key, val) => {

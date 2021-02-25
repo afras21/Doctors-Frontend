@@ -22,11 +22,7 @@ export const camera = require("../assets/icons/camera.png");
 export const plus = require("../assets/icons/plus.png");
 export const playgreen = require("../assets/icons/playgreen.png");
 export const notification = require("../assets/icons/notification.png");
-
-
-
-
-
+export const settings = require("../assets/icons/settings.png");
 
 
 export default {
@@ -51,5 +47,6 @@ export default {
     camera,
     plus,
     playgreen,
-    notification
+    notification,
+    settings
 }

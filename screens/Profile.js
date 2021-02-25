@@ -1,7 +1,7 @@
 import React from 'react';
 import { AsyncStorage } from "@react-native-community/async-storage";
 import { View, TouchableOpacity, Text, SafeAreaView, FlatList, Image } from "react-native";
-import { icons, COLORS, images } from "../constants";
+import { icons, COLORS, images, SIZES } from "../constants";
 
 const listViewProps = [
     {
@@ -26,28 +26,72 @@ const ProfileContainer = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ backgroundColor: '#fAfAfA' }}>
+            {renderHeader(navigation)}
             {renderProfileImage()}
             {renderProfileList()}
             {/* {renderLogoutButton(navigation)} */}
         </SafeAreaView>
     )
 }
+const renderHeader = (navigation) => {
+    return (
+        <View style={{ paddingHorizontal: SIZES.padding, marginBottom: '5%' }}>
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                    <TouchableOpacity
+                        onPress={() => console.log("Menu on clicked")}
+                    >
+                        {/* <Image
+                            source={icons.back}
+                            resizeMode="contain"
+                            style={{
+                                width: 25,
+                                height: 25
+                            }}
+                        /> */}
+                    </TouchableOpacity>
+                </View>
+                {/* <Text style={{textAlign: 'left'}}>Profile</Text> */}
+
+                <View style={{ flex: 1, alignItems: 'flex-end', padding: 10 }}>
+                    <TouchableOpacity
+            onPress={() => { navigation.replace("Login") }}
+            >
+                        <Image
+                            source={icons.settings}
+                            resizeMode="contain"
+                            style={{
+                                width: 20,
+                                height: 20,
+                            }}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </View>
+    )
+}
 
 const renderProfileImage = () => {
     return (
         <View>
-            <View style={{ height: 300, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                <View>
+            <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
+                {/* <View>
                 <Text>128</Text>
                 <Text>Steps</Text>
-                </View>
-                <Image source={images.userprofile} style={{ height: 180, width: 180, borderTopLeftRadius: 70, borderTopRightRadius: 30, borderBottomLeftRadius: 80, borderBottomRightRadius: 80 }} />
-                <View>
+                </View> */}
+                <Image source={images.userprofile}
+                    style={{
+                        height: 180, width: 180,
+                        borderTopLeftRadius: 70, borderTopRightRadius: 30,
+                        borderBottomLeftRadius: 80, borderBottomRightRadius: 80,
+                        borderWidth: 10, borderColor: '#000000'
+                    }} />
+                {/* <View>
                 <Text>12</Text>
                 <Text>Courses</Text>
-                </View>
+                </View> */}
             </View>
-            <Text>Profile</Text>
 
         </View>
 
