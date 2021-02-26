@@ -11,11 +11,16 @@ import {
     heightPercentageToDP as hp
 } from "react-native-responsive-screen";
 import { COLORS } from '../../constants';
+
+import { connect } from 'react-redux'
+import { saveUser } from '../../redux/actions/counterAction'
+
 class LoginContainer extends React.Component {
 
     state = {
-        email: '',
-        password: ''
+        email: 'afras.ali21@gmail.com',
+        password: '123456789',
+        name: ''
     }
 
     async login() {
@@ -27,12 +32,14 @@ class LoginContainer extends React.Component {
         } else {
             alert('Login Failed')
         }
-        console.log(userData);
     }
 
     setUserToken = async (data) => {
         await AsyncStorage.setItem('token', data.token);
         await AsyncStorage.setItem('userData', JSON.stringify(data));
+        const updation = this.props.saveUserData(data); 
+        alert(JSON.stringify(this.props.name))
+
         this.props.navigation.navigate('Tabs');
     }
 
@@ -45,7 +52,7 @@ class LoginContainer extends React.Component {
             <SafeAreaView>
                 <View style={styles.root}>
                     <Text style={styles.loginText}>Login to</Text>
-                    <Text style={styles.loginText}>Just One</Text>
+                    <Text style={styles.loginText}>{`Just One ${this.state.name}`}</Text>
 
                     <View style={styles.loginFormStyle}>
                         <TextInput onChangeText={(val) => this.onChangeText('email', val)} style={styles.placeholderStyles} placeholder={'Enter your email'}></TextInput>
@@ -113,6 +120,18 @@ const styles = StyleSheet.create({
         marginLeft: RFValue(10),
         fontWeight: '600'
     }
-})
+});
 
-export default withNavigation(LoginContainer)
+const mapDispatchToProps = dispatch => {
+    return {
+        saveUserData: (data) => dispatch(saveUser(data))
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        name: state
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(LoginContainer))

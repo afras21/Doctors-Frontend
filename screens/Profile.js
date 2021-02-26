@@ -2,6 +2,8 @@ import React from 'react';
 import { AsyncStorage } from "@react-native-community/async-storage";
 import { View, TouchableOpacity, Text, SafeAreaView, FlatList, Image } from "react-native";
 import { icons, COLORS, images, SIZES } from "../constants";
+import { useSelector } from 'react-redux'
+
 
 const listViewProps = [
     {
@@ -23,11 +25,14 @@ const listViewProps = [
 ]
 
 const ProfileContainer = ({ navigation }) => {
-
+    const profileData = useSelector(state => state);
+    // alert(JSON.stringify(profileData));
+    const dp = profileData.user.dp
+    // console.log(JSON.stringify(profileData))
     return (
         <SafeAreaView style={{ backgroundColor: '#fAfAfA' }}>
             {renderHeader(navigation)}
-            {renderProfileImage()}
+            {renderProfileImage(dp)}
             {renderProfileList()}
             {/* {renderLogoutButton(navigation)} */}
         </SafeAreaView>
@@ -72,7 +77,7 @@ const renderHeader = (navigation) => {
     )
 }
 
-const renderProfileImage = () => {
+const renderProfileImage = (dp) => {
     return (
         <View>
             <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
@@ -80,12 +85,12 @@ const renderProfileImage = () => {
                 <Text>128</Text>
                 <Text>Steps</Text>
                 </View> */}
-                <Image source={images.userprofile}
+                <Image source={{uri: `data:image/png;base64,${dp}`}}
                     style={{
                         height: 180, width: 180,
                         borderTopLeftRadius: 70, borderTopRightRadius: 30,
                         borderBottomLeftRadius: 80, borderBottomRightRadius: 80,
-                        borderWidth: 10, borderColor: '#000000'
+                        borderWidth: 10, borderColor: '#ffffff'
                     }} />
                 {/* <View>
                 <Text>12</Text>

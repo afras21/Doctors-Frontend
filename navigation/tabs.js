@@ -8,6 +8,7 @@ import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom
 import Svg, { Path } from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 import { createStackNavigator } from "@react-navigation/stack";
+import { useSelector } from 'react-redux'
 
 
 import { Home, ItemDetail, Profile, LoginContainer, SignUpContainer, CoachContainer, BookingsContainer } from "../screens"
@@ -101,6 +102,8 @@ const CustomTabBar = (props) => {
 }
 
 const Tabs = () => {
+    const profileData = useSelector(state => state);
+    const dp = profileData.user.dp
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -196,7 +199,7 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={images.userprofile}
+                            source={{uri: `data:image/png;base64,${dp}`}}
                             resizeMode="contain"
                             style={{
                                 width: 30,
