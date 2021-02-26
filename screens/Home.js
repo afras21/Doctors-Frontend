@@ -9,10 +9,16 @@ import {
     FlatList,
     ScrollView
 } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
+
 
 import { images, icons, COLORS, FONTS, SIZES } from '../constants';
+import ImagePicker from 'react-native-image-crop-picker';
+import RNFS from 'react-native-fs';
+import {saveNews} from '../services/newsService'
+import { useSelector } from 'react-redux'
+
+
+
 
 const ScrollableTab = ({ tabList, selectedTab, onPress }) => {
 
@@ -186,6 +192,8 @@ const Home = ({ navigation }) => {
             ]
         },
     ])
+    const userData = useSelector(state => state);
+
 
     const [selectedTab, setSelectedTab] = React.useState({
         id: 0,
@@ -315,6 +323,8 @@ const Home = ({ navigation }) => {
         )
     }
 
+
+
     /**
      * @todo try to inherit/reuse same card for both renderAddcard and scrollableCard
      */
@@ -322,7 +332,7 @@ const Home = ({ navigation }) => {
         return (
             <TouchableOpacity
                 style={{ marginLeft: SIZES.padding * 2, height: 100, marginTop: '3%' }}
-                onPress={() => navigation.navigate("ItemDetail", { "itemInfo": item })}
+                onPress={() => handleAddPost(userData)}
             >
                 <View style={{ borderRadius: SIZES.radius * 0.5, backgroundColor: COLORS.white }}>
                     <Image
@@ -360,6 +370,38 @@ const Home = ({ navigation }) => {
                 {/* {renderRecommended(selectedTab.productList)} */}
             </SafeAreaView>
     )
+}
+const handleAddPost = (userData) => {
+    console.log('hitting')
+    ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: true,
+        includeBase64: true
+    }).then(image => {
+
+        RNFS.readFile(image.path, 'base64')
+            .then(res => {
+                createNewPost(res, 'jpg', userData);
+            });
+    });
+}
+
+const createNewPost = async (image, imageType, userData) => {
+    console.log('-----------------------------', userData.user.id)
+    const postPayload = {
+        userId: userData.user.id,
+        data: image,
+        dataType: imageType
+    }
+    const news = await saveNews(postPayload);
+
+    if(news) {
+        console.log(news);
+        alert('news data posted successfully')
+    } else {
+        alert('Something went wrong');
+    }
 }
 
 const styles = StyleSheet.create({

@@ -92,5 +92,9 @@
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Gallery permission needed</string>
+	<key>NSCameraUsageDescription</key>
+	<string>camera permission needed</string>
 </dict>
 </plist>

@@ -26,9 +26,6 @@ const listViewProps = [
 
 const ProfileContainer = ({ navigation }) => {
     const profileData = useSelector(state => state);
-    // alert(JSON.stringify(profileData));
-    const dp = profileData.user.dp
-    // console.log(JSON.stringify(profileData))
     return (
         <SafeAreaView style={{ backgroundColor: '#fAfAfA' }}>
             {renderHeader(navigation)}
