@@ -10,8 +10,10 @@ import React from 'react';
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import Navigation from './navigation/tabs'
 
-import configureStore from "./redux/store/configureStore";
+import {store, persistor} from "./redux/store/configureStore";
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
+
 
 const theme = {
     ...DefaultTheme,
@@ -24,10 +26,12 @@ const theme = {
 
 const App = () => {
     return (
-        <Provider store={configureStore()}>
-        <NavigationContainer theme={theme}>
-            <Navigation/>
-        </NavigationContainer>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <NavigationContainer theme={theme}>
+                    <Navigation />
+                </NavigationContainer>
+            </PersistGate>
         </Provider>
 
     );

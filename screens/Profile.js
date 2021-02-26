@@ -32,7 +32,7 @@ const ProfileContainer = ({ navigation }) => {
     return (
         <SafeAreaView style={{ backgroundColor: '#fAfAfA' }}>
             {renderHeader(navigation)}
-            {renderProfileImage(dp)}
+            {renderProfileImage(profileData)}
             {renderProfileList()}
             {/* {renderLogoutButton(navigation)} */}
         </SafeAreaView>
@@ -77,7 +77,8 @@ const renderHeader = (navigation) => {
     )
 }
 
-const renderProfileImage = (dp) => {
+const renderProfileImage = (profileData) => {
+    const {name, dp} = profileData.user;
     return (
         <View>
             <View style={{ height: 220, justifyContent: 'center', alignItems: 'center' }}>
@@ -97,6 +98,7 @@ const renderProfileImage = (dp) => {
                 <Text>Courses</Text>
                 </View> */}
             </View>
+            <Text style={{textAlign: 'center', color: '#ababab', fontWeight: '600', fontSize: 20}}>{`${name}`}</Text>
 
         </View>
 

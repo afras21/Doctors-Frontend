@@ -16,7 +16,8 @@ const profileReducer = (state =initialState, action) => {
                 name: action.payload.name,
                 phoneNumber: action.payload.phoneNumber,
                 dp: action.payload.dp,
-                email: action.payload.email
+                email: action.payload.email,
+                name: action.payload.name
             };
         default:
             return state;
