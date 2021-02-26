@@ -85,7 +85,7 @@ const ScrollableCard = ({ navigation, productList }) => {
                 <Image
                     source={item.image}
                     resizeMode="cover"
-                    style={{ width: 100, height: 100, borderRadius: SIZES.radius * 0.5}}
+                    style={{ width: 70, height: 70, borderRadius: SIZES.radius * 0.5}}
                 />
             </View>
         </TouchableOpacity>
@@ -315,23 +315,24 @@ const Home = ({ navigation }) => {
         )
     }
 
+    /**
+     * @todo try to inherit/reuse same card for both renderAddcard and scrollableCard
+     */
     function renderAddCard() {
         return (
             <TouchableOpacity
-                style={{ marginLeft: SIZES.padding * 3 }}
-                onPress={() => { alert('Working on') }}
+                style={{ marginLeft: SIZES.padding * 2, height: 100, marginTop: '3%' }}
+                onPress={() => navigation.navigate("ItemDetail", { "itemInfo": item })}
             >
-                <View>
-                    <View style={{ borderRadius: SIZES.radius * 0.5, backgroundColor: '#ededed', padding: SIZES.padding * 3, marginTop: 10, height: 100 }}>
-                        <Image
-                            source={icons.plus}
-                            resizeMode="cover"
-                            style={{ width: 40, height: 40, borderRadius: SIZES.radius * 0.5, }}
-                        />
-                    </View>
-                    <Text style={{ margin: 10, ...FONTS.h4, color: '#c2c2c2' }}>Add news</Text>
+                <View style={{ borderRadius: SIZES.radius * 0.5, backgroundColor: COLORS.white }}>
+                    <Image
+                        source={icons.plus}
+                        resizeMode="cover"
+                        style={{ width: 70, height: 70, borderRadius: SIZES.radius * 0.5 }}
+                    />
                 </View>
             </TouchableOpacity>
+                        //         {/* <Text style={{ margin: 10, ...FONTS.h4, color: '#c2c2c2' }}>Add news</Text> */}
         )
     }
 
